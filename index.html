@@ -3,30 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Modelo 3D</title>
+    <title>Mis Modelos 3D</title>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
     <style>
         model-viewer {
             width: 100%;
             height: 500px; /* Ajusta la altura según tus necesidades */
-            background-color: #f0f0f0;
+            background-color: #f0f0f0; /* Un fondo gris claro para distinguir */
+            margin-bottom: 30px; /* Espacio entre los modelos */
+            border: 1px solid #ccc; /* Un borde ligero para visualización */
+            border-radius: 8px; /* Bordes redondeados */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 50px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Mi Modelo de Blender con Model Viewer</h1>
+    <h1>Colección de Modelos 3D de Blender</h1>
 
+    <h2>NAVE TIN TIN</h2>
     <model-viewer
         src="nave.glb"
-        alt="Descripción de tu modelo 3D"
+        alt="Una nave espacial futurista"
         ar
         ar-modes="webxr scene-viewer quick-look"
         camera-controls
         shadow-intensity="1"
         autoplay
-        auto-rotate>
+        auto-rotate
+        loading="eager">
     </model-viewer>
 
-</body>
+    <h2>CASA</h2>
+    <model-viewer
+        src="casa.glb"
+        alt="Un objeto 3D diferente y misterioso"
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        camera-controls
+        shadow-intensity="1"
+        autoplay
+        auto-rotate
+        loading="eager"
+        exposure="1.2"
+        environment-image="neutral">
+    </model-viewer>
+
+    </body>
 </html>
