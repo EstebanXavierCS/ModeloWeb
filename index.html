@@ -10,7 +10,7 @@
             width: 100%;
             height: 500px; /* Ajusta la altura según tus necesidades */
             background-color: #f0f0f0; /* Un fondo gris claro para distinguir */
-            margin-bottom: 30px; /* Espacio entre los modelos */
+            margin-bottom: 30px; /* Espacio debajo del visualizador */
             border: 1px solid #ccc; /* Un borde ligero para visualización */
             border-radius: 8px; /* Bordes redondeados */
         }
@@ -24,12 +24,33 @@
 
         h1 {
             color: #333;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         h2 {
             color: #555;
-            margin-top: 50px;
+            margin-top: 20px; /* Espacio arriba del título del modelo */
             margin-bottom: 20px;
+        }
+
+        /* Estilos para el menú desplegable */
+        .model-selector-container {
+            margin-bottom: 30px;
+        }
+
+        #modelSelector {
+            padding: 10px 15px;
+            font-size: 1em;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            background-color: #e6f2ff;
+            color: #0056b3;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        #modelSelector:hover {
+            background-color: #d0e8ff;
         }
     </style>
 </head>
@@ -37,33 +58,76 @@
 
     <h1>Colección de Modelos 3D de Blender</h1>
 
-    <h2>NAVE TIN TIN</h2>
+    <div class="model-selector-container">
+        <label for="modelSelector">Elige un modelo:</label>
+        <select id="modelSelector" onchange="changeModel()">
+            <option value="nave">NAVE TIN TIN</option>
+            <option value="casa">CASA</option>
+        </select>
+    </div>
+
+    <h2 id="currentModelTitle">NAVE TIN TIN</h2>
     <model-viewer
+        id="modelViewer"
         src="nave.glb"
         alt="Una nave espacial futurista"
         ar
         ar-modes="webxr scene-viewer quick-look"
-        camera-controls
-        shadow-intensity="1"
-        autoplay
-        auto-rotate
-        loading="eager">
-    </model-viewer>
-
-    <h2>CASA</h2>
-    <model-viewer
-        src="casa.glb"
-        alt="Un objeto 3D diferente y misterioso"
-        ar
-        ar-modes="webxr scene-viewer quick-look"
+        vr
         camera-controls
         shadow-intensity="1"
         autoplay
         auto-rotate
         loading="eager"
-        exposure="1.2"
-        environment-image="neutral">
+        exposure="1" 
+        environment-image="neutral"> 
     </model-viewer>
 
-    </body>
+    <script>
+        const modelViewer = document.getElementById('modelViewer');
+        const modelSelector = document.getElementById('modelSelector');
+        const currentModelTitle = document.getElementById('currentModelTitle');
+
+        // Define las propiedades para cada modelo
+        const models = {
+            "nave": {
+                src: "nave.glb",
+                alt: "Una nave espacial futurista",
+                title: "NAVE TIN TIN",
+                exposure: "1",
+                environment: "neutral"
+            },
+            "casa": {
+                src: "casa.glb",
+                alt: "Una casa moderna",
+                title: "CASA",
+                exposure: "1.2", // Valor específico para la casa
+                environment: "neutral" // Puedes cambiarlo si tienes otro environment para la casa
+            }
+        };
+
+        function changeModel() {
+            const selectedModelKey = modelSelector.value;
+            const selectedModel = models[selectedModelKey];
+
+            // Actualiza el src y alt del model-viewer
+            modelViewer.src = selectedModel.src;
+            modelViewer.alt = selectedModel.alt;
+
+            // Actualiza los atributos específicos (exposure, environment-image)
+            modelViewer.setAttribute('exposure', selectedModel.exposure);
+            modelViewer.setAttribute('environment-image', selectedModel.environment);
+
+            // Actualiza el título que se muestra sobre el modelo
+            currentModelTitle.textContent = selectedModel.title;
+        }
+
+        // Asegúrate de que el modelo inicial sea el correcto al cargar la página
+        // Esto es útil si el valor por defecto del select no coincide con el src inicial
+        window.onload = function() {
+            changeModel(); // Llama a la función al cargar para establecer las propiedades iniciales correctamente
+        };
+    </script>
+
+</body>
 </html>
